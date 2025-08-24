@@ -1,0 +1,444 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Typography for Lobby Display Readability */
+@layer base {
+  /* Brand Font Families */
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  
+  .font-body {
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* Enhanced Typography Scale for Lobby Viewing Distance */
+  .text-lobby-hero {
+    font-size: 4.5rem; /* 72px - Main hotel name */
+    line-height: 1.1;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .text-lobby-title {
+    font-size: 3.5rem; /* 56px - Section headers */
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .text-lobby-subtitle {
+    font-size: 2.5rem; /* 40px - Subheadings */
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .text-lobby-heading {
+    font-size: 2rem; /* 32px - Card titles */
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  .text-lobby-body-lg {
+    font-size: 1.5rem; /* 24px - Important body text */
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .text-lobby-body {
+    font-size: 1.25rem; /* 20px - Regular body text */
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .text-lobby-caption {
+    font-size: 1.125rem; /* 18px - Small text/captions */
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* Enhanced Text Shadows for Lobby Readability */
+  .text-shadow-soft {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .text-shadow-strong {
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-luxury {
+    text-shadow: 0 4px 12px rgba(201, 169, 110, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-gold {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3), 0 2px 4px rgba(201, 169, 110, 0.2);
+  }
+
+  /* Modern Luxury Color Palette */
+  .bg-luxury-white {
+    background-color: #FFFFFF;
+  }
+
+  .bg-luxury-cream {
+    background-color: #FEFCF9;
+  }
+
+  .bg-luxury-pearl {
+    background-color: #F8F6F3;
+  }
+
+  .bg-luxury-charcoal {
+    background-color: #2A2A2A;
+  }
+
+  .bg-luxury-gold {
+    background-color: #C9A96E;
+  }
+  
+  .bg-luxury-gold-bright {
+    background-color: #D4A574;
+  }
+  
+  .bg-luxury-gold-premium {
+    background-color: #FFD700;
+  }
+
+  .text-luxury-dark {
+    color: #1A1A1A;
+  }
+
+  .text-luxury-charcoal {
+    color: #2A2A2A;
+  }
+
+  .text-luxury-gold {
+    color: #C9A96E;
+  }
+  
+  .text-luxury-gold-bright {
+    color: #D4A574;
+  }
+  
+  .text-luxury-gold-premium {
+    color: #FFD700;
+  }
+
+  .text-luxury-muted {
+    color: #6B7280;
+  }
+
+  /* Enhanced Gradient Backgrounds for Visual Depth */
+  .bg-gradient-luxury-main {
+    background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 50%, #0F0F0F 100%);
+  }
+
+  .bg-gradient-luxury-soft {
+    background: linear-gradient(135deg, #FEFCF9 0%, #F8F6F3 50%, #F5F2EF 100%);
+  }
+
+  .bg-gradient-gold-accent {
+    background: linear-gradient(135deg, #D4A574 0%, #C9A96E 50%, #B8935F 100%);
+  }
+  
+  .bg-gradient-gold-premium {
+    background: linear-gradient(135deg, #FFD700 0%, #D4A574 25%, #C9A96E 50%, #B8935F 75%, #A67C52 100%);
+  }
+  
+  .bg-gradient-pearl-luxury {
+    background: linear-gradient(135deg, #FFFFFF 0%, #FEFCF9 25%, #F8F6F3 50%, #F5F2EF 100%);
+  }
+  
+  /* Animated gradient backgrounds */
+  .bg-gradient-animated {
+    background: linear-gradient(-45deg, #FEFCF9, #F8F6F3, #C9A96E, #D4A574);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+}
+
+/* Dynamic Visual Elements & Animations for Lobby Engagement */
+@layer utilities {
+  /* Enhanced breathing animation for premium attention */
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+  }
+  
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  /* Enhanced float animation with rotation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-8px) rotate(1deg); }
+    66% { transform: translateY(-12px) rotate(-1deg); }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Enhanced shimmer effect for luxury appeal */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(201, 169, 110, 0.4), 
+      rgba(255,255,255,0.6), 
+      rgba(201, 169, 110, 0.4), 
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  
+  /* Golden shimmer for premium elements */
+  @keyframes goldenShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .animate-golden-shimmer {
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(201, 169, 110, 0.8), 
+      rgba(255, 215, 0, 0.9), 
+      rgba(201, 169, 110, 0.8), 
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: goldenShimmer 3s ease-in-out infinite;
+  }
+
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  /* Slide in from left */
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  .animate-slideInLeft {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  /* Enhanced pulse with scale for importance */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+  
+  /* Gentle heartbeat animation */
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+  }
+  
+  .animate-heartbeat {
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  /* Enhanced gradient shift animation */
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  /* Stagger animation delays for orchestrated reveals */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+  .animation-delay-800 { animation-delay: 800ms; }
+  
+  /* Scale-in animation for dramatic reveals */
+  @keyframes scaleIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  .animate-scaleIn {
+    animation: scaleIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  /* Magnetic hover effect */
+  @keyframes magneticHover {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(-5px) scale(1.02); }
+  }
+  
+  .magnetic-hover:hover {
+    animation: magneticHover 0.3s ease-out forwards;
+  }
+  
+  /* Text reveal animation */
+  @keyframes textReveal {
+    0% { 
+      clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+      transform: translateX(-20px);
+    }
+    100% { 
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translateX(0);
+    }
+  }
+  
+  .animate-textReveal {
+    animation: textReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+/* RTL Support for Hebrew and Arabic */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .flex {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+/* RTL Typography adjustments */
+[dir="rtl"] .text-lobby-hero,
+[dir="rtl"] .text-lobby-title,
+[dir="rtl"] .text-lobby-subtitle {
+  font-family: 'Lato', sans-serif; /* Use Lato for RTL instead of Cormorant */
+}
+
+/* Accessibility Features */
+/* High Contrast Mode */
+.high-contrast {
+  --jerusalem-cream: #ffffff;
+  --jerusalem-stone: #000000;
+  --jerusalem-gold: #ffff00;
+  --jerusalem-dark: #000000;
+}
+
+.high-contrast * {
+  background: white !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+.high-contrast .bg-gradient-luxury,
+.high-contrast .bg-gradient-jerusalem,
+.high-contrast [class*="bg-gradient"] {
+  background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
+  color: white !important;
+}
+
+.high-contrast .text-jerusalem-gold,
+.high-contrast .text-yellow-400,
+.high-contrast .text-amber-500 {
+  color: #ffff00 !important;
+}
+
+/* Large Text Mode */
+.large-text .text-lobby-hero { font-size: 6rem !important; }
+.large-text .text-lobby-title { font-size: 4.5rem !important; }
+.large-text .text-lobby-subtitle { font-size: 3rem !important; }
+.large-text .text-lobby-heading { font-size: 2.5rem !important; }
+.large-text .text-lobby-body-lg { font-size: 2rem !important; }
+.large-text .text-lobby-body { font-size: 1.75rem !important; }
+.large-text .text-lobby-caption { font-size: 1.5rem !important; }
+
+/* Reduced Motion Mode */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduced-motion .animate-spin,
+.reduced-motion .animate-bounce,
+.reduced-motion .animate-pulse,
+.reduced-motion .animate-breathe,
+.reduced-motion .animate-float,
+.reduced-motion .animate-shimmer,
+.reduced-motion .animate-gradient {
+  animation: none !important;
+}
+
+/* Focus Indicators for Better Navigation */
+button:focus,
+a:focus,
+[tabindex]:focus {
+  outline: 3px solid #D4A574 !important;
+  outline-offset: 2px !important;
+}
+
+/* Keyboard Navigation Support */
+.keyboard-navigation button:focus,
+.keyboard-navigation a:focus {
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.5) !important;
+}
+
+/* Screen Reader Support */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
