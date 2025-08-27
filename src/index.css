@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Kiosk Scrolling Fix - Prevent text selection and enable touch/mouse drag scrolling */
+html, body {
+  margin: 0;
+  height: 100%;
+  overscroll-behavior: contain;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: pan-y; /* enables vertical touch scrolling */
+  cursor: default;
+}
+
 /* Custom Typography for Lobby Display Readability */
 @layer base {
   /* Brand Font Families */
@@ -74,83 +85,83 @@
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3), 0 2px 4px rgba(201, 169, 110, 0.2);
   }
 
-  /* Modern Luxury Color Palette */
-  .bg-luxury-white {
-    background-color: #FFFFFF;
+  /* Brand Color Palette */
+  .bg-brand-primary {
+    background-color: #25407b;
   }
 
-  .bg-luxury-cream {
-    background-color: #FEFCF9;
+  .bg-brand-dark {
+    background-color: #221f20;
   }
 
-  .bg-luxury-pearl {
-    background-color: #F8F6F3;
+  .bg-brand-gray {
+    background-color: #949699;
   }
 
-  .bg-luxury-charcoal {
-    background-color: #2A2A2A;
+  .bg-brand-navy {
+    background-color: #11233e;
   }
 
-  .bg-luxury-gold {
-    background-color: #C9A96E;
+  .bg-brand-blue {
+    background-color: #4c70b7;
   }
   
-  .bg-luxury-gold-bright {
-    background-color: #D4A574;
+  .bg-brand-blue-medium {
+    background-color: #284f91;
   }
   
-  .bg-luxury-gold-premium {
-    background-color: #FFD700;
+  .bg-brand-blue-dark {
+    background-color: #203a66;
   }
 
-  .text-luxury-dark {
-    color: #1A1A1A;
+  .text-brand-primary {
+    color: #25407b;
   }
 
-  .text-luxury-charcoal {
-    color: #2A2A2A;
+  .text-brand-dark {
+    color: #221f20;
   }
 
-  .text-luxury-gold {
-    color: #C9A96E;
+  .text-brand-gray {
+    color: #949699;
   }
   
-  .text-luxury-gold-bright {
-    color: #D4A574;
+  .text-brand-navy {
+    color: #11233e;
   }
   
-  .text-luxury-gold-premium {
-    color: #FFD700;
+  .text-brand-blue {
+    color: #4c70b7;
   }
 
-  .text-luxury-muted {
-    color: #6B7280;
+  .text-brand-blue-medium {
+    color: #284f91;
   }
 
-  /* Enhanced Gradient Backgrounds for Visual Depth */
-  .bg-gradient-luxury-main {
-    background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 50%, #0F0F0F 100%);
+  .text-brand-blue-dark {
+    color: #203a66;
   }
 
-  .bg-gradient-luxury-soft {
-    background: linear-gradient(135deg, #FEFCF9 0%, #F8F6F3 50%, #F5F2EF 100%);
+  /* Brand Gradient Backgrounds */
+  .bg-gradient-brand-main {
+    background: linear-gradient(135deg, #25407b 0%, #11233e 50%, #203a66 100%);
   }
 
-  .bg-gradient-gold-accent {
-    background: linear-gradient(135deg, #D4A574 0%, #C9A96E 50%, #B8935F 100%);
+  .bg-gradient-brand-soft {
+    background: linear-gradient(135deg, #4c70b7 0%, #284f91 50%, #25407b 100%);
+  }
+
+  .bg-gradient-brand-accent {
+    background: linear-gradient(135deg, #4c70b7 0%, #25407b 50%, #203a66 100%);
   }
   
-  .bg-gradient-gold-premium {
-    background: linear-gradient(135deg, #FFD700 0%, #D4A574 25%, #C9A96E 50%, #B8935F 75%, #A67C52 100%);
-  }
-  
-  .bg-gradient-pearl-luxury {
-    background: linear-gradient(135deg, #FFFFFF 0%, #FEFCF9 25%, #F8F6F3 50%, #F5F2EF 100%);
+  .bg-gradient-brand-dark {
+    background: linear-gradient(135deg, #221f20 0%, #11233e 50%, #203a66 100%);
   }
   
   /* Animated gradient backgrounds */
   .bg-gradient-animated {
-    background: linear-gradient(-45deg, #FEFCF9, #F8F6F3, #C9A96E, #D4A574);
+    background: linear-gradient(-45deg, #25407b, #4c70b7, #284f91, #203a66);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
   }
@@ -318,6 +329,37 @@
   
   .animate-textReveal {
     animation: textReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  /* Appetite-stimulating animations for food content */
+  @keyframes appetiteGlow {
+    0%, 100% { box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3); }
+    50% { box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 165, 0, 0.3); }
+  }
+  
+  .appetite-glow {
+    animation: appetiteGlow 3s ease-in-out infinite;
+  }
+  
+  /* Urgency pulse for limited time offers */
+  @keyframes urgencyPulse {
+    0% { transform: scale(1); background-color: rgb(239 68 68); }
+    50% { transform: scale(1.05); background-color: rgb(220 38 38); }
+    100% { transform: scale(1); background-color: rgb(239 68 68); }
+  }
+  
+  .urgency-pulse {
+    animation: urgencyPulse 2s ease-in-out infinite;
+  }
+  
+  /* Trust-building subtle glow for service info */
+  @keyframes trustGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(37, 64, 123, 0.2); }
+    50% { box-shadow: 0 6px 25px rgba(37, 64, 123, 0.4); }
+  }
+  
+  .trust-glow {
+    animation: trustGlow 4s ease-in-out infinite;
   }
 }
 

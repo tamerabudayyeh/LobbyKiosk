@@ -22,5 +22,36 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Kiosk Scrolling Enhancement - Enable drag-to-scroll for touch and mouse -->
+    <script>
+    (() => {
+      let isDown = false, startY = 0, startScroll = 0;
+
+      // Mouse drag to scroll
+      window.addEventListener('mousedown', e => {
+        isDown = true; startY = e.clientY; startScroll = window.scrollY;
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        window.scrollTo({top: startScroll - (e.clientY - startY), behavior: 'auto'});
+      });
+      window.addEventListener('mouseup', () => isDown = false);
+      window.addEventListener('mouseleave', () => isDown = false);
+
+      // Touch drag to scroll
+      let tStart = 0, tScroll = 0;
+      window.addEventListener('touchstart', e => {
+        tStart = e.touches[0].clientY; tScroll = window.scrollY;
+      }, {passive: true});
+      window.addEventListener('touchmove', e => {
+        const y = e.touches[0].clientY;
+        window.scrollTo({top: tScroll - (y - tStart), behavior: 'auto'});
+      }, {passive: true});
+
+      // Optional: disable right-click
+      window.addEventListener('contextmenu', e => e.preventDefault());
+    })();
+    </script>
   </body>
 </html>

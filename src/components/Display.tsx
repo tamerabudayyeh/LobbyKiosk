@@ -47,13 +47,18 @@ export const Display: React.FC = () => {
     }
     
     try {
-      const today = new Date().toISOString().split('T')[0];
+      const now = new Date().toISOString();
+      
+      // Get events that are currently active:
+      // - start_time is before or equal to now
+      // - end_time is after or equal to now
+      // - is_active is true
       const { data, error } = await supabase
         .from('events')
         .select('*')
         .eq('is_active', true)
-        .gte('start_time', today)
-        .lte('start_time', today + 'T23:59:59')
+        .lte('start_time', now)
+        .gte('end_time', now)
         .order('start_time', { ascending: true });
 
       if (error) throw error;
@@ -107,39 +112,143 @@ export const Display: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-luxury-cream">
+    <div className="h-screen overflow-hidden bg-luxury-cream">
       <Header />
       
-      <RestaurantSpecials />
-      
-      <AdCarousel ads={ads} />
-      
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-8 py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-display font-light text-luxury-dark mb-4">
-              Today's Events
-            </h2>
-            <div className="w-16 h-0.5 bg-luxury-gold mx-auto"></div>
+      {/* Single Screen Information Grid - No Scrolling Required */}
+      <div className="flex-1 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-8 py-6">
+          <div className="grid grid-cols-12 gap-6 h-full">
+            
+            {/* Left Column: Restaurant Highlights */}
+            <div className="col-span-4 space-y-4">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4 h-full">
+                <div className="text-center mb-4">
+                  <h3 className="text-2xl font-display font-light text-luxury-dark mb-2">
+                    Today's Special
+                  </h3>
+                  <div className="w-12 h-0.5 bg-luxury-gold mx-auto"></div>
+                </div>
+                
+                {/* Featured Dish - Compact Display */}
+                <div className="space-y-3">
+                  <div className="relative h-32 rounded-lg overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=800&q=80" 
+                      alt="Mediterranean Lamb Tagine"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-2 right-2">
+                      <div className="bg-white bg-opacity-95 text-luxury-dark px-2 py-1 rounded-full shadow-sm">
+                        <span className="text-sm font-body font-bold">$34</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h4 className="text-lg font-display font-medium text-luxury-dark">
+                    Mediterranean Lamb Tagine
+                  </h4>
+                  <p className="text-sm font-body text-luxury-muted line-clamp-2">
+                    Slow-cooked lamb with apricots and aromatic spices, served with saffron couscous
+                  </p>
+                  <div className="text-center pt-2">
+                    <p className="text-xs font-body text-luxury-gold">Restaurant open 6:00 AM - 11:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Center Column: Featured Content */}
+            <div className="col-span-5 space-y-4">
+              {/* Today's Events or Ad Carousel */}
+              {events.length > 0 ? (
+                <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4 h-full">
+                  <div className="text-center mb-4">
+                    <h3 className="text-2xl font-display font-light text-luxury-dark mb-2">
+                      Today's Events
+                    </h3>
+                    <div className="w-12 h-0.5 bg-luxury-gold mx-auto"></div>
+                  </div>
+                  <div className="space-y-3 max-h-80 overflow-y-auto">
+                    {events.slice(0, 3).map((event) => (
+                      <div key={event.id} className="border-b border-gray-100 pb-3 last:border-b-0">
+                        <h4 className="text-base font-display font-medium text-luxury-dark mb-1">
+                          {event.title}
+                        </h4>
+                        <p className="text-sm font-body text-luxury-muted mb-2">
+                          {event.location} • {new Date(event.start_time).toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true})}
+                        </p>
+                        {event.description && (
+                          <p className="text-xs font-body text-luxury-muted line-clamp-2">
+                            {event.description}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {events.length === 0 && (
+                    <div className="text-center py-8">
+                      <p className="text-lg font-display font-light text-luxury-gold mb-3">Discover Jerusalem Today</p>
+                      <p className="text-sm font-body text-luxury-muted mb-1">Visit our concierge for personalized recommendations</p>
+                      <p className="text-xs font-body text-luxury-muted opacity-75">Old City • Mahane Yehuda Market • Museums</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="h-full">
+                  <AdCarousel ads={ads} />
+                </div>
+              )}
+            </div>
+
+            {/* Right Column: Essential Guest Services */}
+            <div className="col-span-3 space-y-4">
+              {/* Quick Services */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
+                <h3 className="text-lg font-display font-medium text-luxury-dark mb-3 text-center">
+                  Guest Services
+                </h3>
+                <div className="space-y-3">
+                  <div className="text-center py-2 bg-luxury-pearl rounded-lg">
+                    <p className="text-sm font-body text-luxury-charcoal font-medium">Concierge</p>
+                    <p className="text-lg font-body text-luxury-gold font-bold">Ext. 0</p>
+                  </div>
+                  <div className="text-center py-2 bg-luxury-pearl rounded-lg">
+                    <p className="text-sm font-body text-luxury-charcoal font-medium">Check-out</p>
+                    <p className="text-lg font-body text-luxury-gold font-bold">11:00 AM</p>
+                  </div>
+                  <div className="text-center py-2 bg-red-50 rounded-lg">
+                    <p className="text-sm font-body text-red-600 font-medium">Emergency</p>
+                    <p className="text-lg font-body text-red-600 font-bold">Ext. 911</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Jerusalem Highlights */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4 flex-1">
+                <h3 className="text-lg font-display font-medium text-luxury-dark mb-3 text-center">
+                  Explore Jerusalem
+                </h3>
+                <div className="space-y-2">
+                  <div className="text-center py-1">
+                    <p className="text-sm font-body text-luxury-charcoal">Old City</p>
+                    <p className="text-xs font-body text-luxury-muted">10 min walk</p>
+                  </div>
+                  <div className="text-center py-1">
+                    <p className="text-sm font-body text-luxury-charcoal">Western Wall</p>
+                    <p className="text-xs font-body text-luxury-muted">12 min walk</p>
+                  </div>
+                  <div className="text-center py-1">
+                    <p className="text-sm font-body text-luxury-charcoal">Mahane Yehuda</p>
+                    <p className="text-xs font-body text-luxury-muted">15 min drive</p>
+                  </div>
+                  <div className="text-center py-1">
+                    <p className="text-sm font-body text-luxury-charcoal">Israel Museum</p>
+                    <p className="text-xs font-body text-luxury-muted">20 min drive</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          {events.length === 0 ? (
-            <div className="text-center py-24">
-              <p className="text-2xl font-display font-light text-luxury-gold mb-6">Discover Jerusalem Today</p>
-              <p className="text-lg font-body text-luxury-muted mb-2">Visit our concierge for personalized recommendations</p>
-              <p className="text-base font-body text-luxury-muted opacity-75">Explore the Old City • Mahane Yehuda Market • Museum Quarter</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {events.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  onClick={setSelectedEvent}
-                />
-              ))}
-            </div>
-          )}
         </div>
       </div>
       
