@@ -341,7 +341,7 @@ export const KioskDisplayPortraitNew: React.FC = () => {
 
           {/* DISH OF THE DAY - Brand Colors Zone (Top-Right) - Priority #2 */}
           <div 
-            className="col-span-3 row-span-2 bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 group magnetic-hover border border-brand-blue/30"
+            className="col-span-3 row-span-2 bg-gradient-to-br from-brand-blue/10 to-brand-blue/5 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 group magnetic-hover border-2 border-brand-blue/20"
             onClick={() => featuredDish && handleContentClick(featuredDish, 'dish', 'Dish of the Day')}
           >
             <div className="h-full flex flex-col">
@@ -384,7 +384,7 @@ export const KioskDisplayPortraitNew: React.FC = () => {
 
           {/* RESTAURANT SPECIALTIES - Brand Colors Zone (Middle-Right) - Priority #3 */}
           <div 
-            className="col-span-3 row-span-2 bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 group magnetic-hover border border-brand-blue-medium/30"
+            className="col-span-3 row-span-2 bg-gradient-to-br from-brand-blue-medium/10 to-brand-blue-medium/5 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 group magnetic-hover border-2 border-brand-blue-medium/20"
             onClick={() => featuredSpecialty && handleContentClick(featuredSpecialty, 'special', "Chef's Specialty")}
           >
             <div className="h-full flex flex-col">
@@ -511,12 +511,12 @@ export const KioskDisplayPortraitNew: React.FC = () => {
               </div>
               <div className="h-full flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-2">
-                  <Zap className="animate-pulse" size={24} />
-                  <h3 className="text-xl font-bold">Special Offer</h3>
+                  <Zap className="animate-pulse text-white" size={24} />
+                  <h3 className="text-xl font-bold text-white">Special Offer</h3>
                 </div>
                 {featuredOffer ? (
                   <div>
-                    <h4 className="text-lg font-bold mb-2 line-clamp-1">{featuredOffer.title}</h4>
+                    <h4 className="text-lg font-bold mb-2 line-clamp-1 text-white">{featuredOffer.title}</h4>
                     <p className="text-white/80 mb-3 line-clamp-2 text-sm">{featuredOffer.description}</p>
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold text-yellow-300">{featuredOffer.price}</div>
@@ -541,7 +541,7 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                   <Utensils size={24} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold mb-2">Restaurant Hours</h3>
+                  <h3 className="text-lg font-bold mb-2 text-white">Restaurant Hours</h3>
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-center">
                       <div className="font-bold text-yellow-300">Breakfast</div>
@@ -561,30 +561,28 @@ export const KioskDisplayPortraitNew: React.FC = () => {
             </div>
           </div>
 
-          {/* GUEST SERVICES - Trust & Convenience Zone */}
+          {/* WIFI INFO - Guest Connection Zone */}
           <div className="col-span-4 row-span-1 bg-gradient-to-r from-brand-blue to-brand-blue-dark rounded-2xl shadow-xl p-4 text-white">
             <div className="h-full flex items-center">
-              <div className="grid grid-cols-3 gap-3 w-full text-center">
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 mb-1">
-                    <Info size={20} />
+              <div className="flex items-center justify-center w-full gap-8">
+                <div className="flex items-center gap-4">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                    <Zap size={28} />
                   </div>
-                  <div className="font-bold text-sm text-yellow-300">Concierge</div>
-                  <div className="text-white/90 text-xs">Extension 0</div>
+                  <div>
+                    <div className="text-sm text-yellow-300 font-semibold">WiFi Network</div>
+                    <div className="text-xl font-bold text-white">Ambassador</div>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 mb-1">
-                    <Zap size={20} />
+                <div className="h-12 w-px bg-white/30"></div>
+                <div className="flex items-center gap-4">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                    <Star size={28} />
                   </div>
-                  <div className="font-bold text-sm text-yellow-300">WiFi</div>
-                  <div className="text-white/90 text-xs">AmbassadorGuest</div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 mb-1">
-                    <Star size={20} />
+                  <div>
+                    <div className="text-sm text-yellow-300 font-semibold">Password</div>
+                    <div className="text-xl font-bold text-white">Ambassador</div>
                   </div>
-                  <div className="font-bold text-sm text-yellow-300">Password</div>
-                  <div className="text-white/90 text-xs">Welcome2024</div>
                 </div>
               </div>
             </div>
