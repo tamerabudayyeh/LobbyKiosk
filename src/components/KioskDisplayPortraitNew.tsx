@@ -53,10 +53,10 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, title, conte
         <div className={`${colors.header} text-white p-8 relative overflow-hidden`}>
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative z-10">
-            <h2 className="text-4xl font-display font-bold text-shadow-strong mb-2">{title}</h2>
+            <h2 className="text-4xl font-display font-bold text-white text-shadow-strong mb-2">{title}</h2>
             <div className="flex items-center gap-2">
-              <Sparkles size={20} className="animate-pulse" />
-              <span className="text-xl opacity-90">{type === 'dish' ? 'Culinary Excellence' : type === 'special' ? 'Signature Creation' : type === 'offer' ? 'Limited Time' : 'Featured Content'}</span>
+              <Sparkles size={20} className="animate-pulse text-white" />
+              <span className="text-xl text-white/90">{type === 'dish' ? 'Culinary Excellence' : type === 'special' ? 'Signature Creation' : type === 'offer' ? 'Limited Time' : 'Featured Content'}</span>
             </div>
           </div>
         </div>
@@ -83,23 +83,23 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, title, conte
                 </div>
               )}
               {type === 'ad' && content.duration && (
-                <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                  <p className="text-brand-blue font-semibold">📺 Display duration: {content.duration} seconds</p>
+                <div className="bg-brand-blue rounded-xl p-4 border border-brand-blue-dark">
+                  <p className="text-white font-semibold">📺 Display duration: {content.duration} seconds</p>
                 </div>
               )}
               {type === 'dish' && (
-                <div className="bg-orange-50 rounded-xl p-4 border border-orange-200">
-                  <p className="text-orange-700 font-semibold">👨‍🍳 Chef's recommendation - Fresh ingredients daily</p>
+                <div className="bg-brand-blue rounded-xl p-4 border border-brand-blue-dark">
+                  <p className="text-white font-semibold">👨‍🍳 Chef's recommendation - Fresh ingredients daily</p>
                 </div>
               )}
               {type === 'special' && (
-                <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
-                  <p className="text-amber-700 font-semibold">⭐ Signature dish - Exclusively at Ambassador Jerusalem</p>
+                <div className="bg-brand-blue-medium rounded-xl p-4 border border-brand-blue-dark">
+                  <p className="text-white font-semibold">⭐ Signature dish - Exclusively at Ambassador Jerusalem</p>
                 </div>
               )}
               {type === 'offer' && (
-                <div className="bg-red-50 rounded-xl p-4 border border-red-200">
-                  <p className="text-red-700 font-semibold">⚡ Limited time offer - Don't miss out!</p>
+                <div className="bg-brand-dark rounded-xl p-4 border border-brand-navy">
+                  <p className="text-white font-semibold">⚡ Limited time offer - Don't miss out!</p>
                 </div>
               )}
             </div>
@@ -275,13 +275,13 @@ export const KioskDisplayPortraitNew: React.FC = () => {
       <header className="bg-gradient-brand-main text-white px-6 py-3 shadow-2xl">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <h1 className="text-4xl font-display font-light tracking-wide text-shadow-soft">Ambassador Jerusalem</h1>
+            <h1 className="text-4xl font-display font-light tracking-wide text-white text-shadow-soft">Ambassador Jerusalem</h1>
             <div className="h-6 w-px bg-white/30"></div>
-            <div className="text-sm font-light text-yellow-200">Your Luxury Experience</div>
+            <div className="text-sm font-light text-white/90">Your Luxury Experience</div>
           </div>
           <div className="text-right">
-            <div className="text-3xl font-light">{formatTime(currentTime)}</div>
-            <div className="text-sm opacity-90">{formatDate(currentTime)}</div>
+            <div className="text-3xl font-light text-white">{formatTime(currentTime)}</div>
+            <div className="text-sm text-white/80">{formatDate(currentTime)}</div>
           </div>
         </div>
       </header>
@@ -351,8 +351,8 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <ChefHat size={20} />
                     <div>
-                      <h3 className="text-lg font-bold">Today's Special</h3>
-                      <p className="text-blue-100 text-xs">Chef's Pick</p>
+                      <h3 className="text-lg font-bold text-white">Today's Special</h3>
+                      <p className="text-white/80 text-xs">Chef's Pick</p>
                     </div>
                   </div>
                   <Sparkles className="text-yellow-300 animate-pulse" size={16} />
@@ -394,8 +394,8 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Star size={20} />
                     <div>
-                      <h3 className="text-lg font-bold">Chef's Specialty</h3>
-                      <p className="text-blue-100 text-xs">Premium</p>
+                      <h3 className="text-lg font-bold text-white">Chef's Specialty</h3>
+                      <p className="text-white/80 text-xs">Premium</p>
                     </div>
                   </div>
                 </div>
@@ -517,7 +517,7 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                 {featuredOffer ? (
                   <div>
                     <h4 className="text-lg font-bold mb-2 line-clamp-1">{featuredOffer.title}</h4>
-                    <p className="text-gray-200 mb-3 line-clamp-2 text-sm">{featuredOffer.description}</p>
+                    <p className="text-white/80 mb-3 line-clamp-2 text-sm">{featuredOffer.description}</p>
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold text-yellow-300">{featuredOffer.price}</div>
                       <ChevronRight className="text-white" size={20} />
@@ -525,8 +525,8 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                   </div>
                 ) : (
                   <div className="text-center">
-                    <p className="text-lg mb-1">Amazing deals coming soon!</p>
-                    <p className="text-gray-200 text-sm">Check back later</p>
+                    <p className="text-lg mb-1 text-white">Amazing deals coming soon!</p>
+                    <p className="text-white/70 text-sm">Check back later</p>
                   </div>
                 )}
               </div>
@@ -545,15 +545,15 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-center">
                       <div className="font-bold text-yellow-300">Breakfast</div>
-                      <div className="text-blue-100">7:00-11:00</div>
+                      <div className="text-white/90">7:00-11:00</div>
                     </div>
                     <div className="text-center">
                       <div className="font-bold text-yellow-300">Lunch</div>
-                      <div className="text-blue-100">12:00-15:00</div>
+                      <div className="text-white/90">12:00-15:00</div>
                     </div>
                     <div className="text-center">
                       <div className="font-bold text-yellow-300">Dinner</div>
-                      <div className="text-blue-100">19:00-22:30</div>
+                      <div className="text-white/90">19:00-22:30</div>
                     </div>
                   </div>
                 </div>
@@ -570,21 +570,21 @@ export const KioskDisplayPortraitNew: React.FC = () => {
                     <Info size={20} />
                   </div>
                   <div className="font-bold text-sm text-yellow-300">Concierge</div>
-                  <div className="text-blue-100 text-xs">Extension 0</div>
+                  <div className="text-white/90 text-xs">Extension 0</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 mb-1">
                     <Zap size={20} />
                   </div>
                   <div className="font-bold text-sm text-yellow-300">WiFi</div>
-                  <div className="text-blue-100 text-xs">AmbassadorGuest</div>
+                  <div className="text-white/90 text-xs">AmbassadorGuest</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 mb-1">
                     <Star size={20} />
                   </div>
                   <div className="font-bold text-sm text-yellow-300">Password</div>
-                  <div className="text-blue-100 text-xs">Welcome2024</div>
+                  <div className="text-white/90 text-xs">Welcome2024</div>
                 </div>
               </div>
             </div>
