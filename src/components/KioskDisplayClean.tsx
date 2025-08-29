@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Event, Ad, RestaurantSpecial } from '../types';
 import { EventModal } from './EventModal';
-import { Clock, Calendar, Utensils, ChefHat, Tag, Star, Info, ChevronRight, MapPin, Zap, Sparkles, Sun, Wifi, Eye, EyeOff, Percent } from 'lucide-react';
+import { fetchWeatherData } from '../services/weather';
+import { Clock, Calendar, Utensils, ChefHat, Tag, Star, Info, ChevronRight, MapPin, Zap, Sparkles, Sun, Cloud, CloudRain, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, Wifi, Eye, EyeOff, Percent } from 'lucide-react';
 
 interface DetailModalProps {
   isOpen: boolean;
@@ -73,6 +74,7 @@ export const KioskDisplayClean: React.FC = () => {
   const [showEventModal, setShowEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [weatherData, setWeatherData] = useState<any>(null);
 
   // Filter data by category using actual database categories
   const dishesOfTheDay = restaurantSpecials.filter(item => item.category === 'dish' && item.is_available);
@@ -83,6 +85,10 @@ export const KioskDisplayClean: React.FC = () => {
     fetchEvents();
     fetchAds();
     fetchRestaurantSpecials();
+    loadWeatherData();
+    
+    // Refresh weather every 30 minutes
+    const weatherInterval = setInterval(loadWeatherData, 30 * 60 * 1000);
 
     const eventsSubscription = supabase
       .channel('events')
@@ -113,6 +119,7 @@ export const KioskDisplayClean: React.FC = () => {
       restaurantSubscription.unsubscribe();
       clearInterval(clockInterval);
       clearInterval(adRotationInterval);
+      clearInterval(weatherInterval);
     };
   }, [ads.length]);
 
@@ -197,6 +204,34 @@ export const KioskDisplayClean: React.FC = () => {
     setShowEventModal(true);
   };
 
+  const loadWeatherData = async () => {
+    const data = await fetchWeatherData();
+    if (data) {
+      setWeatherData(data);
+    }
+  };
+  
+  const getWeatherIcon = () => {
+    if (!weatherData) return <Sun className="text-yellow-500 mb-4" size={64} />;
+    
+    switch(weatherData.icon) {
+      case 'cloud-sun':
+        return <Cloud className="text-gray-400 mb-4" size={64} />;
+      case 'cloud-rain':
+        return <CloudRain className="text-blue-500 mb-4" size={64} />;
+      case 'cloud-snow':
+        return <CloudSnow className="text-blue-200 mb-4" size={64} />;
+      case 'cloud-lightning':
+        return <CloudLightning className="text-purple-500 mb-4" size={64} />;
+      case 'cloud-drizzle':
+        return <CloudDrizzle className="text-blue-400 mb-4" size={64} />;
+      case 'cloud-fog':
+        return <CloudFog className="text-gray-500 mb-4" size={64} />;
+      default:
+        return <Sun className="text-yellow-500 mb-4" size={64} />;
+    }
+  };
+
   const currentAd = ads[currentAdIndex];
   const featuredDish = dishesOfTheDay[0];
   const featuredOffer = specialOffers[0];
@@ -205,16 +240,45 @@ export const KioskDisplayClean: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header with Weather */}
         <header className="bg-white rounded-3xl shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-5xl font-display font-light text-brand-dark">Ambassador Jerusalem</h1>
               <p className="text-lg text-gray-600 mt-1">Your Luxury Hotel Experience</p>
             </div>
-            <div className="text-right">
-              <div className="text-4xl font-light text-brand-dark">{formatTime(currentTime)}</div>
-              <div className="text-lg text-gray-600">{formatDate(currentTime)}</div>
+            <div className="flex items-center gap-8">
+              {/* Weather in Header */}
+              <div className="flex items-center gap-3">
+                {weatherData ? (
+                  <>
+                    {weatherData.icon === 'sun' ? <Sun className="text-yellow-500" size={36} /> :
+                     weatherData.icon === 'cloud-sun' ? <Cloud className="text-gray-400" size={36} /> :
+                     weatherData.icon === 'cloud-rain' ? <CloudRain className="text-blue-500" size={36} /> :
+                     weatherData.icon === 'cloud-snow' ? <CloudSnow className="text-blue-200" size={36} /> :
+                     weatherData.icon === 'cloud-lightning' ? <CloudLightning className="text-purple-500" size={36} /> :
+                     weatherData.icon === 'cloud-drizzle' ? <CloudDrizzle className="text-blue-400" size={36} /> :
+                     weatherData.icon === 'cloud-fog' ? <CloudFog className="text-gray-500" size={36} /> :
+                     <Sun className="text-yellow-500" size={36} />}
+                    <div>
+                      <div className="text-2xl font-bold text-brand-dark">{weatherData.temperature}°C</div>
+                      <div className="text-sm text-gray-600">{weatherData.condition}</div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="text-yellow-500" size={36} />
+                    <div>
+                      <div className="text-2xl font-bold text-brand-dark">24°C</div>
+                      <div className="text-sm text-gray-600">Clear</div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="text-right">
+                <div className="text-4xl font-light text-brand-dark">{formatTime(currentTime)}</div>
+                <div className="text-lg text-gray-600">{formatDate(currentTime)}</div>
+              </div>
             </div>
           </div>
         </header>
@@ -254,14 +318,6 @@ export const KioskDisplayClean: React.FC = () => {
               
               {/* Content */}
               <div className="relative z-10 p-6 h-full flex flex-col justify-end text-white">
-                {/* Star Rating */}
-                <div className="flex items-center gap-1 mb-3">
-                  <Star className="text-yellow-400" size={20} fill="currentColor" />
-                  <Star className="text-yellow-400" size={20} fill="currentColor" />
-                  <Star className="text-yellow-400" size={20} fill="currentColor" />
-                  <Star className="text-yellow-400" size={20} fill="currentColor" />
-                  <Star className="text-yellow-400" size={20} fill="currentColor" />
-                </div>
                 
                 {featuredDish ? (
                   <>
@@ -298,44 +354,8 @@ export const KioskDisplayClean: React.FC = () => {
             </div>
           </div>
 
-          {/* Weather Card */}
-          <div className="col-span-3">
-            <div className="bg-white rounded-3xl p-6 h-full shadow-lg">
-              <div className="flex flex-col items-center justify-center h-full">
-                <Sun className="text-yellow-500 mb-4" size={64} />
-                <div className="text-5xl font-bold text-brand-dark mb-2">24°C</div>
-                <div className="text-xl text-gray-600">Sunny</div>
-                <div className="text-lg text-gray-500 mt-4">Jerusalem Today</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Restaurant Hours */}
-          <div className="col-span-3">
-            <div className="bg-brand-blue rounded-3xl p-6 h-full shadow-lg text-white">
-              <div className="flex items-center gap-3 mb-4">
-                <Utensils size={28} />
-                <h3 className="text-2xl font-bold">Restaurant Hours</h3>
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg">Breakfast</span>
-                  <span className="text-xl font-semibold">7:00-11:00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg">Lunch</span>
-                  <span className="text-xl font-semibold">12:00-15:00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg">Dinner</span>
-                  <span className="text-xl font-semibold">19:00-22:30</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Special Offers Card */}
-          <div className="col-span-3">
+          <div className="col-span-6">
             <div 
               className="bg-yellow-50 border-2 border-yellow-200 rounded-3xl p-6 h-full shadow-lg cursor-pointer hover:scale-[1.02] transition-transform"
               onClick={() => featuredOffer && handleContentClick(featuredOffer, 'offer', 'Special Offer')}
@@ -370,38 +390,6 @@ export const KioskDisplayClean: React.FC = () => {
                   </div>
                 </div>
               )}
-            </div>
-          </div>
-
-          {/* WiFi Network Card */}
-          <div className="col-span-3">
-            <div className="bg-white border-2 border-dashed border-brand-blue rounded-3xl p-6 h-full shadow-lg">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-brand-blue rounded-2xl p-3">
-                  <Wifi size={24} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-brand-dark">WiFi Network</h3>
-                  <p className="text-sm text-gray-600">Complimentary Internet</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <label className="text-gray-500 text-sm block mb-1">Network Name</label>
-                  <div className="bg-gray-50 rounded-lg p-3 font-mono text-brand-blue font-bold">
-                    Ambassador_Guest
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="text-gray-500 text-sm block mb-1">Password</label>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <span className="font-mono text-brand-blue font-bold">
-                      Ambassador
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
