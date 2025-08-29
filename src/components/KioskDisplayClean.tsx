@@ -395,16 +395,10 @@ export const KioskDisplayClean: React.FC = () => {
                 
                 <div>
                   <label className="text-gray-500 text-sm block mb-1">Password</label>
-                  <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-between">
+                  <div className="bg-gray-50 rounded-lg p-3">
                     <span className="font-mono text-brand-blue font-bold">
-                      {showPassword ? 'Ambassador' : '••••••••••••'}
+                      Ambassador
                     </span>
-                    <button
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="text-brand-blue hover:text-brand-navy transition-colors"
-                    >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
                   </div>
                 </div>
               </div>
@@ -514,7 +508,7 @@ export const KioskDisplayClean: React.FC = () => {
           {currentAd && (
             <div className="col-span-12">
               <div 
-                className="bg-gradient-to-r from-brand-blue to-brand-navy rounded-3xl p-8 shadow-xl cursor-pointer hover:scale-[1.01] transition-transform relative overflow-hidden"
+                className="bg-white border-2 border-brand-blue rounded-3xl p-8 shadow-xl cursor-pointer hover:scale-[1.01] transition-transform relative overflow-hidden"
                 onClick={() => handleContentClick(currentAd, 'ad', 'Featured Promotion')}
               >
                 <div className="flex items-center gap-8">
@@ -527,16 +521,16 @@ export const KioskDisplayClean: React.FC = () => {
                       />
                     </div>
                   )}
-                  <div className="flex-1 text-white">
-                    <h2 className="text-4xl font-bold mb-4">{currentAd.title}</h2>
-                    <p className="text-xl text-white/90 leading-relaxed">{currentAd.description}</p>
+                  <div className="flex-1">
+                    <h2 className="text-4xl font-bold mb-4 text-brand-blue">{currentAd.title}</h2>
+                    <p className="text-xl text-gray-700 leading-relaxed">{currentAd.description}</p>
                   </div>
                   <div className="flex gap-2">
                     {ads.map((_, idx) => (
                       <div
                         key={idx}
                         className={`h-3 rounded-full transition-all duration-300 ${
-                          idx === currentAdIndex ? 'w-12 bg-yellow-400' : 'w-3 bg-white/30'
+                          idx === currentAdIndex ? 'w-12 bg-brand-blue' : 'w-3 bg-gray-300'
                         }`}
                       />
                     ))}
