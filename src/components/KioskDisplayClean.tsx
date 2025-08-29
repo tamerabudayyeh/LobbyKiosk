@@ -225,36 +225,74 @@ export const KioskDisplayClean: React.FC = () => {
           {/* Featured Dish Card - Top Priority with Image */}
           <div className="col-span-6 row-span-2">
             <div 
-              className="bg-brand-blue rounded-3xl p-6 h-full cursor-pointer hover:scale-[1.02] transition-transform text-white relative overflow-hidden"
+              className="relative overflow-hidden rounded-3xl shadow-xl bg-gradient-to-br from-brand-blue to-brand-navy h-full cursor-pointer hover:scale-[1.02] transition-transform"
               onClick={() => featuredDish && handleContentClick(featuredDish, 'dish', 'Chef\'s Special')}
             >
-              <div className="absolute top-4 left-4 bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
-                <Star size={16} />
-                <span>FEATURED</span>
+              {/* Food Image Background */}
+              <div className="absolute inset-0">
+                {featuredDish?.image_url ? (
+                  <img 
+                    src={featuredDish.image_url} 
+                    alt={featuredDish.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img 
+                    src="https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                    alt="Jerusalem Mixed Grill"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/85 to-transparent"></div>
               </div>
-              <div className="pt-12">
-                <h2 className="text-2xl font-semibold mb-1">Chef's Special</h2>
+              
+              {/* Chef's Special Badge */}
+              <div className="absolute top-4 left-4 bg-yellow-500 text-brand-dark px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+                <ChefHat size={16} />
+                <span>CHEF'S SPECIAL</span>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10 p-6 h-full flex flex-col justify-end text-white">
+                {/* Star Rating */}
+                <div className="flex items-center gap-1 mb-3">
+                  <Star className="text-yellow-400" size={20} fill="currentColor" />
+                  <Star className="text-yellow-400" size={20} fill="currentColor" />
+                  <Star className="text-yellow-400" size={20} fill="currentColor" />
+                  <Star className="text-yellow-400" size={20} fill="currentColor" />
+                  <Star className="text-yellow-400" size={20} fill="currentColor" />
+                </div>
+                
                 {featuredDish ? (
                   <>
-                    <h3 className="text-3xl font-bold mb-4">{featuredDish.title}</h3>
-                    {featuredDish.image_url && (
-                      <div className="rounded-2xl overflow-hidden mb-4 h-48">
-                        <img 
-                          src={featuredDish.image_url} 
-                          alt={featuredDish.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    )}
-                    <p className="text-white/90 text-lg leading-relaxed mb-4">{featuredDish.description}</p>
-                    {featuredDish.price && (
-                      <div className="text-3xl font-bold text-yellow-300">{featuredDish.price}</div>
-                    )}
+                    <h3 className="text-3xl font-bold mb-3">{featuredDish.title}</h3>
+                    <p className="text-blue-100 mb-4 text-lg leading-relaxed">
+                      {featuredDish.description}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      {featuredDish.price && (
+                        <div className="text-yellow-400 text-3xl font-bold">{featuredDish.price}</div>
+                      )}
+                      <button className="bg-yellow-500 text-brand-dark px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition-colors">
+                        VIEW DETAILS
+                      </button>
+                    </div>
                   </>
                 ) : (
-                  <div className="h-full flex items-center justify-center">
-                    <p className="text-xl text-white/70">Check back soon for today's special</p>
-                  </div>
+                  <>
+                    <h3 className="text-3xl font-bold mb-3">Jerusalem Mixed Grill</h3>
+                    <p className="text-blue-100 mb-4 text-lg leading-relaxed">
+                      Traditional mixed grill with lamb kebab, chicken, and beef served with fresh pita and hummus
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="text-yellow-400 text-3xl font-bold">₪85</div>
+                      <button className="bg-yellow-500 text-brand-dark px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition-colors">
+                        VIEW DETAILS
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -337,32 +375,35 @@ export const KioskDisplayClean: React.FC = () => {
 
           {/* WiFi Network Card */}
           <div className="col-span-3">
-            <div className="bg-white border-2 border-blue-200 border-dashed rounded-3xl p-6 h-full shadow-lg">
+            <div className="bg-white border-2 border-dashed border-brand-blue rounded-3xl p-6 h-full shadow-lg">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-blue-500 rounded-2xl p-3">
+                <div className="bg-brand-blue rounded-2xl p-3">
                   <Wifi size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800">WiFi Network</h3>
+                  <h3 className="text-xl font-bold text-brand-dark">WiFi Network</h3>
                   <p className="text-sm text-gray-600">Complimentary Internet</p>
                 </div>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div>
-                  <p className="text-sm text-gray-500 mb-2">Network Name</p>
-                  <p className="text-xl font-bold text-brand-blue">Ambassador_Guest</p>
+                  <label className="text-gray-500 text-sm block mb-1">Network Name</label>
+                  <div className="bg-gray-50 rounded-lg p-3 font-mono text-brand-blue font-bold">
+                    Ambassador_Guest
+                  </div>
                 </div>
+                
                 <div>
-                  <p className="text-sm text-gray-500 mb-2">Password</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-xl font-bold text-brand-blue">
+                  <label className="text-gray-500 text-sm block mb-1">Password</label>
+                  <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-between">
+                    <span className="font-mono text-brand-blue font-bold">
                       {showPassword ? 'Ambassador' : '••••••••••••'}
-                    </p>
-                    <button 
+                    </span>
+                    <button
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-gray-500 hover:text-brand-blue transition-colors"
+                      className="text-brand-blue hover:text-brand-navy transition-colors"
                     >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
                 </div>
@@ -375,86 +416,95 @@ export const KioskDisplayClean: React.FC = () => {
             <div className="bg-white rounded-3xl p-6 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-brand-blue rounded-2xl p-3">
-                  <Calendar size={24} className="text-white" />
+                  <Calendar size={20} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800">Today's Events</h3>
-                  <p className="text-gray-600">Happening Now</p>
+                  <h3 className="text-xl font-bold text-brand-dark">Today's Events</h3>
+                  <p className="text-gray-500 text-sm">Happening Now</p>
                 </div>
               </div>
-              <div className="space-y-4">
+
+              <div className="space-y-3">
                 {events.length > 0 ? (
                   events.slice(0, 2).map((event, idx) => (
                     <div 
                       key={event.id}
-                      className="border-l-4 border-brand-blue pl-4 cursor-pointer hover:bg-gray-50 transition-colors py-2"
+                      className="border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow cursor-pointer"
                       onClick={() => handleEventClick(event)}
                     >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="text-xl font-bold text-brand-dark mb-1">{event.title}</h4>
-                          <div className="flex items-center gap-4 text-gray-600 mb-2">
-                            <div className="flex items-center gap-1">
-                              <Clock size={16} />
-                              <span>{new Date(event.start_time).toLocaleTimeString('en-US', { 
-                                hour: '2-digit', 
-                                minute: '2-digit',
-                                hour12: false 
-                              })}</span>
-                            </div>
-                            {event.location && (
-                              <div className="flex items-center gap-1">
-                                <MapPin size={16} />
-                                <span>{event.location}</span>
-                              </div>
-                            )}
-                          </div>
-                          <p className="text-gray-700">{event.description}</p>
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-bold text-brand-blue text-lg">{event.title}</h4>
+                        <span className={`${idx === 0 ? 'bg-green-500' : 'bg-blue-500'} text-white text-xs px-3 py-1 rounded-full font-bold`}>
+                          {idx === 0 ? 'LIVE' : 'UPCOMING'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 text-gray-500 text-sm mb-2">
+                        <div className="flex items-center gap-1">
+                          <Clock size={14} />
+                          <span>{new Date(event.start_time).toLocaleTimeString('en-US', { 
+                            hour: '2-digit', 
+                            minute: '2-digit',
+                            hour12: false 
+                          })}</span>
                         </div>
-                        {idx === 0 && (
-                          <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            LIVE
-                          </div>
-                        )}
-                        {idx === 1 && (
-                          <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            UPCOMING
+                        {event.location && (
+                          <div className="flex items-center gap-1">
+                            <MapPin size={14} />
+                            <span>{event.location}</span>
                           </div>
                         )}
                       </div>
+                      
+                      <p className="text-brand-dark text-sm">{event.description}</p>
                     </div>
                   ))
                 ) : (
-                  <div>
-                    <div className="border-l-4 border-brand-blue pl-4 py-2">
-                      <h4 className="text-xl font-bold text-brand-dark mb-1">Al-Diwan Specialty Restaurant</h4>
-                      <div className="flex items-center gap-4 text-gray-600 mb-2">
+                  <>
+                    <div className="border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-bold text-brand-blue text-lg">Al-Diwan Specialty Restaurant</h4>
+                        <span className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold">
+                          LIVE
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 text-gray-500 text-sm mb-2">
                         <div className="flex items-center gap-1">
-                          <Clock size={16} />
+                          <Clock size={14} />
                           <span>19:30</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <MapPin size={16} />
+                          <MapPin size={14} />
                           <span>Al-Diwan Restaurant</span>
                         </div>
                       </div>
-                      <p className="text-gray-700">Soup of the day: Potato leek & Pumpkin sage soup</p>
+                      
+                      <p className="text-brand-dark text-sm">Soup of the day: Potato leek & Pumpkin sage soup</p>
                     </div>
-                    <div className="border-l-4 border-gray-300 pl-4 py-2">
-                      <h4 className="text-xl font-bold text-brand-dark mb-1">Evening Jazz Performance</h4>
-                      <div className="flex items-center gap-4 text-gray-600 mb-2">
+
+                    <div className="border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-bold text-brand-blue text-lg">Evening Jazz Performance</h4>
+                        <span className="bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold">
+                          UPCOMING
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 text-gray-500 text-sm mb-2">
                         <div className="flex items-center gap-1">
-                          <Clock size={16} />
+                          <Clock size={14} />
                           <span>21:00</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <MapPin size={16} />
+                          <MapPin size={14} />
                           <span>Lobby Bar</span>
                         </div>
                       </div>
-                      <p className="text-gray-700">Live jazz music featuring local artists</p>
+                      
+                      <p className="text-brand-dark text-sm">Live jazz music featuring local artists</p>
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
             </div>
