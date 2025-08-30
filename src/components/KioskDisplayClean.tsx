@@ -3,7 +3,8 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Event, Ad, RestaurantSpecial } from '../types';
 import { EventModal } from './EventModal';
 import { fetchWeatherData } from '../services/weather';
-import { Clock, Calendar, Utensils, ChefHat, Tag, Star, Info, ChevronRight, MapPin, Zap, Sparkles, Sun, Cloud, CloudRain, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, Wifi, Eye, EyeOff, Percent } from 'lucide-react';
+import { Clock, Calendar, Utensils, ChefHat, Tag, Star, Info, ChevronRight, MapPin, Zap, Sparkles, Sun, Cloud, CloudRain, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, Wifi, Eye, EyeOff, Percent, Soup } from 'lucide-react';
+import { SpecialsCarousel } from './SpecialsCarousel';
 
 interface DetailModalProps {
   isOpen: boolean;
@@ -77,9 +78,9 @@ export const KioskDisplayClean: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
 
   // Filter data by category using actual database categories
-  const dishesOfTheDay = restaurantSpecials.filter(item => item.category === 'dish' && item.is_available);
-  const specialOffers = restaurantSpecials.filter(item => item.category === 'soup' && item.is_available);
-  const specialties = restaurantSpecials.filter(item => item.category === 'special' && item.is_available);
+  const soupOfTheDay = restaurantSpecials.filter(item => item.category === 'soup' && item.is_available);
+  const dishOfTheDay = restaurantSpecials.filter(item => item.category === 'dish' && item.is_available);
+  const todaysSpecials = restaurantSpecials.filter(item => item.category === 'special' && item.is_available);
 
   useEffect(() => {
     fetchEvents();
@@ -233,9 +234,9 @@ export const KioskDisplayClean: React.FC = () => {
   };
 
   const currentAd = ads[currentAdIndex];
-  const featuredDish = dishesOfTheDay[0];
-  const featuredOffer = specialOffers[0];
-  const featuredSpecialty = specialties[0];
+  const featuredSoup = soupOfTheDay[0];
+  const featuredDish = dishOfTheDay[0];
+  const allSpecials = todaysSpecials;
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -354,40 +355,34 @@ export const KioskDisplayClean: React.FC = () => {
             </div>
           </div>
 
-          {/* Special Offers Card */}
+          {/* Soup of the Day Card */}
           <div className="col-span-6">
             <div 
-              className="bg-yellow-50 border-2 border-yellow-200 rounded-3xl p-6 h-full shadow-lg cursor-pointer hover:scale-[1.02] transition-transform"
-              onClick={() => featuredOffer && handleContentClick(featuredOffer, 'offer', 'Special Offer')}
+              className="bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200 rounded-3xl p-6 h-full shadow-lg cursor-pointer hover:scale-[1.02] transition-transform"
+              onClick={() => featuredSoup && handleContentClick(featuredSoup, 'offer', 'Soup of the Day')}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-yellow-400 rounded-2xl p-3">
-                  <Percent size={24} className="text-black" />
+                <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-3">
+                  <Soup size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800">Special Offers</h3>
-                  <p className="text-sm text-gray-600">Limited Time</p>
+                  <h3 className="text-xl font-bold text-gray-800">Soup of the Day</h3>
+                  <p className="text-sm text-gray-600">Chef's Selection</p>
                 </div>
               </div>
-              {featuredOffer ? (
+              {featuredSoup ? (
                 <div>
-                  <h4 className="text-2xl font-bold text-brand-dark mb-2">{featuredOffer.title}</h4>
-                  <p className="text-gray-700 mb-4">{featuredOffer.description}</p>
-                  {featuredOffer.price && (
-                    <div className="text-3xl font-bold text-yellow-600">{featuredOffer.price}</div>
+                  <h4 className="text-2xl font-bold text-brand-dark mb-2">{featuredSoup.title}</h4>
+                  <p className="text-gray-700 mb-4 line-clamp-2">{featuredSoup.description}</p>
+                  {featuredSoup.price && (
+                    <div className="text-3xl font-bold text-amber-600">{featuredSoup.price}</div>
                   )}
                 </div>
               ) : (
                 <div>
-                  <div className="mb-4">
-                    <h4 className="text-2xl font-bold text-brand-dark mb-2">30% off</h4>
-                    <p className="text-gray-700">Dinner Menu</p>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-brand-dark mb-1">Happy Hour</h4>
-                    <p className="text-gray-600">5:00 PM - 7:00 PM</p>
-                    <p className="text-2xl font-bold text-yellow-600 mt-2">50% off</p>
-                  </div>
+                  <h4 className="text-2xl font-bold text-brand-dark mb-2">Crushed Green Wheat Soup</h4>
+                  <p className="text-gray-700 mb-4">Traditional Middle Eastern soup with herbs and spices</p>
+                  <div className="text-3xl font-bold text-amber-600">₪32</div>
                 </div>
               )}
             </div>
@@ -491,6 +486,16 @@ export const KioskDisplayClean: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Today's Specials Carousel */}
+          {allSpecials.length > 0 && (
+            <div className="col-span-12">
+              <SpecialsCarousel 
+                specials={allSpecials} 
+                onItemClick={(special) => handleContentClick(special, 'special', 'Today\'s Special')}
+              />
+            </div>
+          )}
 
           {/* Ad Carousel - Bottom */}
           {currentAd && (

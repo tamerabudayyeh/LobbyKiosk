@@ -25,7 +25,7 @@ export interface Ad {
 
 export interface RestaurantSpecial {
   id: string;
-  category: 'dish-of-day' | 'offers' | 'specialties';
+  category: 'soup' | 'dish' | 'special';
   title: string;
   description: string;
   image_url: string;
