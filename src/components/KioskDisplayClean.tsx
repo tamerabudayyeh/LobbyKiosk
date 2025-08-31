@@ -247,8 +247,11 @@ export const KioskDisplayClean: React.FC = () => {
         <header className="bg-white rounded-3xl shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-5xl font-display font-light text-brand-dark">Ambassador Jerusalem</h1>
-              <p className="text-lg text-gray-600 mt-1">Your Luxury Hotel Experience</p>
+              <img 
+                src="https://zwthhdmcbqcdfxfafzab.supabase.co/storage/v1/object/public/hotelsphotos/Jerusalem%20logo.png"
+                alt="Ambassador Jerusalem Hotel Logo"
+                className="h-20 w-auto object-contain"
+              />
             </div>
             <div className="flex items-center gap-8">
               {/* Weather in Header */}
@@ -316,7 +319,7 @@ export const KioskDisplayClean: React.FC = () => {
               {/* Chef's Special Badge */}
               <div className="absolute top-4 left-4 bg-yellow-500 text-brand-dark px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
                 <ChefHat size={16} />
-                <span>CHEF'S SPECIAL</span>
+                <span>TODAY'S FEATURED</span>
               </div>
               
               {/* Content */}
@@ -358,7 +361,7 @@ export const KioskDisplayClean: React.FC = () => {
           </div>
 
           {/* Offers Card */}
-          <div className={showEvents ? "col-span-6" : "col-span-12"}>
+          <div className="col-span-6">
             <div 
               className="bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200 rounded-3xl p-6 h-full shadow-lg cursor-pointer hover:scale-[1.02] transition-transform"
               onClick={() => featuredOffer && handleContentClick(featuredOffer, 'offer', 'Special Offer')}
