@@ -156,12 +156,12 @@ export const AdminPanel: React.FC = () => {
 
   const getCategoryInfo = (category: string) => {
     switch (category) {
-      case 'dish':
+      case 'dish-of-day':
         return { title: 'Dish of the Day', icon: '🍽️', color: 'bg-green-100 text-green-800' };
       case 'offers':
         return { title: 'Special Offers', icon: '🎯', color: 'bg-orange-100 text-orange-800' };
-      case 'special':
-        return { title: 'Today\'s Special', icon: '⭐', color: 'bg-purple-100 text-purple-800' };
+      case 'specialties':
+        return { title: 'Restaurant Specialties', icon: '⭐', color: 'bg-purple-100 text-purple-800' };
       default:
         return { title: 'Item', icon: '🍴', color: 'bg-gray-100 text-gray-800' };
     }

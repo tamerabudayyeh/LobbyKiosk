@@ -55,7 +55,7 @@ export const SpecialsCarousel: React.FC<SpecialsCarouselProps> = ({ specials, on
             <Star size={24} className="text-white" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-800">Today's Specials</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Restaurant Specialties</h3>
             <p className="text-sm text-gray-600">Chef's Premium Selection</p>
           </div>
         </div>

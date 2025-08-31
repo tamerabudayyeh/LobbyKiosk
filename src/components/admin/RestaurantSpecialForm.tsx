@@ -11,7 +11,7 @@ interface RestaurantSpecialFormProps {
 
 export const RestaurantSpecialForm: React.FC<RestaurantSpecialFormProps> = ({ special, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
-    category: special?.category || 'dish' as 'dish' | 'offers' | 'special',
+    category: special?.category || 'dish-of-day' as 'dish-of-day' | 'offers' | 'specialties',
     title: special?.title || '',
     description: special?.description || '',
     image_url: special?.image_url || '',
@@ -52,12 +52,12 @@ export const RestaurantSpecialForm: React.FC<RestaurantSpecialFormProps> = ({ sp
 
   const getCategoryInfo = (category: string) => {
     switch (category) {
-      case 'dish':
+      case 'dish-of-day':
         return { title: 'Dish of the Day', icon: '🍽️' };
       case 'offers':
         return { title: 'Special Offers', icon: '🎯' };
-      case 'special':
-        return { title: 'Today\'s Special', icon: '⭐' };
+      case 'specialties':
+        return { title: 'Restaurant Specialties', icon: '⭐' };
       default:
         return { title: 'Special', icon: '🍴' };
     }
@@ -80,12 +80,12 @@ export const RestaurantSpecialForm: React.FC<RestaurantSpecialFormProps> = ({ sp
             <select
               required
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as 'dish' | 'offers' | 'special' })}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as 'dish-of-day' | 'offers' | 'specialties' })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="dish">🍽️ Dish of the Day</option>
+              <option value="dish-of-day">🍽️ Dish of the Day</option>
               <option value="offers">🎯 Special Offers</option>
-              <option value="special">⭐ Today's Special</option>
+              <option value="specialties">⭐ Restaurant Specialties</option>
             </select>
             <p className="text-sm text-gray-500 mt-1">
               {getCategoryInfo(formData.category).title}

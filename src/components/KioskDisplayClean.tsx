@@ -81,8 +81,8 @@ export const KioskDisplayClean: React.FC = () => {
 
   // Filter data by category using actual database categories
   const offers = restaurantSpecials.filter(item => item.category === 'offers' && item.is_available);
-  const dishOfTheDay = restaurantSpecials.filter(item => item.category === 'dish' && item.is_available);
-  const todaysSpecials = restaurantSpecials.filter(item => item.category === 'special' && item.is_available);
+  const dishOfTheDay = restaurantSpecials.filter(item => item.category === 'dish-of-day' && item.is_available);
+  const todaysSpecials = restaurantSpecials.filter(item => item.category === 'specialties' && item.is_available);
 
   useEffect(() => {
     fetchEvents();
