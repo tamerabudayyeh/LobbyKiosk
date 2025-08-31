@@ -11,7 +11,7 @@ interface RestaurantSpecialFormProps {
 
 export const RestaurantSpecialForm: React.FC<RestaurantSpecialFormProps> = ({ special, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
-    category: special?.category || 'dish' as 'dish' | 'soup' | 'special',
+    category: special?.category || 'dish' as 'dish' | 'offers' | 'special',
     title: special?.title || '',
     description: special?.description || '',
     image_url: special?.image_url || '',
@@ -54,10 +54,10 @@ export const RestaurantSpecialForm: React.FC<RestaurantSpecialFormProps> = ({ sp
     switch (category) {
       case 'dish':
         return { title: 'Dish of the Day', icon: '🍽️' };
-      case 'soup':
-        return { title: 'Soup of the Day', icon: '🍲' };
+      case 'offers':
+        return { title: 'Special Offers', icon: '🎯' };
       case 'special':
-        return { title: 'Special of the Day', icon: '⭐' };
+        return { title: 'Today\'s Special', icon: '⭐' };
       default:
         return { title: 'Special', icon: '🍴' };
     }
@@ -80,12 +80,12 @@ export const RestaurantSpecialForm: React.FC<RestaurantSpecialFormProps> = ({ sp
             <select
               required
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as 'dish' | 'soup' | 'special' })}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as 'dish' | 'offers' | 'special' })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="dish">🍽️ Dish of the Day</option>
-              <option value="soup">🍲 Soup of the Day</option>
-              <option value="special">⭐ Special of the Day</option>
+              <option value="offers">🎯 Special Offers</option>
+              <option value="special">⭐ Today's Special</option>
             </select>
             <p className="text-sm text-gray-500 mt-1">
               {getCategoryInfo(formData.category).title}

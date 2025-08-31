@@ -4,9 +4,11 @@ import { Event, Ad, RestaurantSpecial } from '../../types';
 import { EventForm } from './EventForm';
 import { AdForm } from './AdForm';
 import { RestaurantSpecialForm } from './RestaurantSpecialForm';
-import { Plus, Edit, Trash2, Calendar, Image, ExternalLink, ChefHat } from 'lucide-react';
+import { Plus, Edit, Trash2, Calendar, Image, ExternalLink, ChefHat, Eye, EyeOff } from 'lucide-react';
+import { useSettings } from '../../contexts/SettingsContext';
 
 export const AdminPanel: React.FC = () => {
+  const { showEvents, setShowEvents } = useSettings();
   const [events, setEvents] = useState<Event[]>([]);
   const [ads, setAds] = useState<Ad[]>([]);
   const [restaurantSpecials, setRestaurantSpecials] = useState<RestaurantSpecial[]>([]);
@@ -156,10 +158,10 @@ export const AdminPanel: React.FC = () => {
     switch (category) {
       case 'dish':
         return { title: 'Dish of the Day', icon: '🍽️', color: 'bg-green-100 text-green-800' };
-      case 'soup':
-        return { title: 'Soup of the Day', icon: '🍲', color: 'bg-orange-100 text-orange-800' };
+      case 'offers':
+        return { title: 'Special Offers', icon: '🎯', color: 'bg-orange-100 text-orange-800' };
       case 'special':
-        return { title: 'Special of the Day', icon: '⭐', color: 'bg-purple-100 text-purple-800' };
+        return { title: 'Today\'s Special', icon: '⭐', color: 'bg-purple-100 text-purple-800' };
       default:
         return { title: 'Item', icon: '🍴', color: 'bg-gray-100 text-gray-800' };
     }
@@ -195,18 +197,43 @@ export const AdminPanel: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-3xl font-bold">Hotel Lobby Admin Panel</h1>
                 <p className="text-blue-100">Manage events, advertisements, and restaurant specials</p>
               </div>
-              <a
-                href="/"
-                className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all duration-200 flex items-center"
-              >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                View Display
-              </a>
+              <div className="flex items-center gap-4">
+                {/* Events Visibility Toggle */}
+                <div className="bg-white bg-opacity-20 rounded-lg p-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-white font-medium">Show Events</span>
+                    <button
+                      onClick={() => setShowEvents(!showEvents)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        showEvents ? 'bg-green-500' : 'bg-gray-400'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          showEvents ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                    {showEvents ? (
+                      <Eye className="w-5 h-5 text-green-300" />
+                    ) : (
+                      <EyeOff className="w-5 h-5 text-gray-300" />
+                    )}
+                  </div>
+                </div>
+                <a
+                  href="/"
+                  className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all duration-200 flex items-center"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  View Display
+                </a>
+              </div>
             </div>
           </div>
           
