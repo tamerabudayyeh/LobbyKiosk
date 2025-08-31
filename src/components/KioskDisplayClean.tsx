@@ -362,10 +362,7 @@ export const KioskDisplayClean: React.FC = () => {
 
           {/* Offers Card */}
           <div className="col-span-6">
-            <div 
-              className="bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200 rounded-3xl p-6 h-full shadow-lg cursor-pointer hover:scale-[1.02] transition-transform"
-              onClick={() => featuredOffer && handleContentClick(featuredOffer, 'offer', 'Special Offer')}
-            >
+            <div className="bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200 rounded-3xl p-6 h-full shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-3">
                   <Percent size={24} className="text-white" />
@@ -375,21 +372,43 @@ export const KioskDisplayClean: React.FC = () => {
                   <p className="text-sm text-gray-600">Limited Time</p>
                 </div>
               </div>
-              {featuredOffer ? (
-                <div>
-                  <h4 className="text-2xl font-bold text-brand-dark mb-2">{featuredOffer.title}</h4>
-                  <p className="text-gray-700 mb-4 line-clamp-2">{featuredOffer.description}</p>
-                  {featuredOffer.price && (
-                    <div className="text-3xl font-bold text-amber-600">{featuredOffer.price}</div>
-                  )}
-                </div>
-              ) : (
-                <div>
-                  <h4 className="text-2xl font-bold text-brand-dark mb-2">Weekend Special</h4>
-                  <p className="text-gray-700 mb-4">Get 30% off on all dinner menu items</p>
-                  <div className="text-3xl font-bold text-amber-600">30% OFF</div>
-                </div>
-              )}
+
+              <div className="space-y-3">
+                {offers.length > 0 ? (
+                  offers.slice(0, 3).map((offer, idx) => (
+                    <div 
+                      key={offer.id}
+                      className="border border-amber-200 rounded-2xl p-3 hover:shadow-md transition-shadow cursor-pointer bg-white/50"
+                      onClick={() => handleContentClick(offer, 'offer', 'Special Offer')}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-brand-dark text-base">{offer.title}</h4>
+                        {offer.price && (
+                          <span className="text-amber-600 font-bold text-lg">{offer.price}</span>
+                        )}
+                      </div>
+                      <p className="text-gray-700 text-sm line-clamp-2">{offer.description}</p>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div className="border border-amber-200 rounded-2xl p-3 hover:shadow-md transition-shadow bg-white/50">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-brand-dark text-base">Happy Hour</h4>
+                        <span className="text-amber-600 font-bold text-lg">50% OFF</span>
+                      </div>
+                      <p className="text-gray-700 text-sm">Premium cocktails and appetizers 5:00-7:00 PM</p>
+                    </div>
+                    <div className="border border-amber-200 rounded-2xl p-3 hover:shadow-md transition-shadow bg-white/50">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-brand-dark text-base">Weekend Special</h4>
+                        <span className="text-amber-600 font-bold text-lg">30% OFF</span>
+                      </div>
+                      <p className="text-gray-700 text-sm">All dinner menu items Friday-Sunday</p>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
