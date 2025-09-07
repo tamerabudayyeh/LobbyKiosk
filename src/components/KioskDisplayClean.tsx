@@ -78,17 +78,61 @@ export const KioskDisplayClean: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [weatherData, setWeatherData] = useState<any>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [reloadCountdown, setReloadCountdown] = useState<number | null>(null);
+  
+  // Auto-refresh configuration (in seconds)
+  const DATA_REFRESH_INTERVAL = 45; // 45 seconds for API data
+  const PAGE_RELOAD_INTERVAL = 600; // 10 minutes for full page reload
+  const RELOAD_WARNING_TIME = 10; // Show warning 10 seconds before reload
 
   // Filter data by category using actual database categories
   const offers = restaurantSpecials.filter(item => item.category === 'offers' && item.is_available);
   const dishOfTheDay = restaurantSpecials.filter(item => item.category === 'dish-of-day' && item.is_available);
   const todaysSpecials = restaurantSpecials.filter(item => item.category === 'specialties' && item.is_available);
 
+  // Function to refresh all data with smooth transition
+  const refreshAllData = async () => {
+    setIsRefreshing(true);
+    try {
+      await Promise.all([
+        fetchEvents(),
+        fetchAds(),
+        fetchRestaurantSpecials(),
+        loadWeatherData()
+      ]);
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500); // Brief transition
+    }
+  };
+
   useEffect(() => {
-    fetchEvents();
-    fetchAds();
-    fetchRestaurantSpecials();
-    loadWeatherData();
+    // Initial data load
+    refreshAllData();
+    
+    // Auto-refresh data at regular intervals
+    const dataRefreshInterval = setInterval(() => {
+      refreshAllData();
+    }, DATA_REFRESH_INTERVAL * 1000);
+    
+    // Full page reload with countdown warning
+    const pageReloadWarningTimeout = setTimeout(() => {
+      // Start countdown 10 seconds before reload
+      let countdown = RELOAD_WARNING_TIME;
+      setReloadCountdown(countdown);
+      
+      const countdownInterval = setInterval(() => {
+        countdown--;
+        setReloadCountdown(countdown);
+        
+        if (countdown <= 0) {
+          clearInterval(countdownInterval);
+          window.location.reload();
+        }
+      }, 1000);
+    }, (PAGE_RELOAD_INTERVAL - RELOAD_WARNING_TIME) * 1000);
     
     // Refresh weather every 30 minutes
     const weatherInterval = setInterval(loadWeatherData, 30 * 60 * 1000);
@@ -123,11 +167,13 @@ export const KioskDisplayClean: React.FC = () => {
       clearInterval(clockInterval);
       clearInterval(adRotationInterval);
       clearInterval(weatherInterval);
+      clearInterval(dataRefreshInterval);
+      clearTimeout(pageReloadWarningTimeout);
     };
   }, [ads.length]);
 
   const fetchEvents = async () => {
-    if (!isSupabaseConfigured) return;
+    if (!isSupabaseConfigured) return Promise.resolve();
     
     try {
       const now = new Date().toISOString();
@@ -147,7 +193,7 @@ export const KioskDisplayClean: React.FC = () => {
   };
 
   const fetchAds = async () => {
-    if (!isSupabaseConfigured) return;
+    if (!isSupabaseConfigured) return Promise.resolve();
     
     try {
       const { data, error } = await supabase
@@ -164,7 +210,7 @@ export const KioskDisplayClean: React.FC = () => {
   };
 
   const fetchRestaurantSpecials = async () => {
-    if (!isSupabaseConfigured) return;
+    if (!isSupabaseConfigured) return Promise.resolve();
     
     try {
       const { data, error } = await supabase
@@ -242,7 +288,20 @@ export const KioskDisplayClean: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+      {/* Reload Countdown Indicator */}
+      {reloadCountdown !== null && (
+        <div className="fixed top-4 right-4 bg-brand-blue text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse">
+          <div className="flex items-center gap-2">
+            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span className="font-semibold">Refreshing display in {reloadCountdown}s...</span>
+          </div>
+        </div>
+      )}
+      
+      <div className={`max-w-7xl mx-auto transition-opacity duration-500 ${isRefreshing ? 'opacity-80' : 'opacity-100'}`}>
         {/* Header with Weather */}
         <header className="bg-white rounded-3xl shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center">
