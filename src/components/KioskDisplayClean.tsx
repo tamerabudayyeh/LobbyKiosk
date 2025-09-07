@@ -300,16 +300,10 @@ export const KioskDisplayClean: React.FC = () => {
             >
               {/* Food Image Background */}
               <div className="absolute inset-0">
-                {featuredDish?.image_url ? (
+                {featuredDish?.image_url && (
                   <img 
                     src={featuredDish.image_url} 
                     alt={featuredDish.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <img 
-                    src="https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                    alt="Jerusalem Mixed Grill"
                     className="w-full h-full object-cover"
                   />
                 )}
@@ -325,7 +319,7 @@ export const KioskDisplayClean: React.FC = () => {
               {/* Content */}
               <div className="relative z-10 p-6 h-full flex flex-col justify-end text-white">
                 
-                {featuredDish ? (
+                {featuredDish && (
                   <>
                     <h3 className="text-3xl font-bold mb-3">{featuredDish.title}</h3>
                     <p className="text-blue-100 mb-4 text-lg leading-relaxed">
@@ -336,20 +330,6 @@ export const KioskDisplayClean: React.FC = () => {
                       {featuredDish.price && (
                         <div className="text-yellow-400 text-3xl font-bold">{featuredDish.price}</div>
                       )}
-                      <button className="bg-yellow-500 text-brand-dark px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition-colors">
-                        VIEW DETAILS
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-3xl font-bold mb-3">Jerusalem Mixed Grill</h3>
-                    <p className="text-blue-100 mb-4 text-lg leading-relaxed">
-                      Traditional mixed grill with lamb kebab, chicken, and beef served with fresh pita and hummus
-                    </p>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="text-yellow-400 text-3xl font-bold">₪85</div>
                       <button className="bg-yellow-500 text-brand-dark px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition-colors">
                         VIEW DETAILS
                       </button>
@@ -462,51 +442,9 @@ export const KioskDisplayClean: React.FC = () => {
                     </div>
                   ))
                 ) : (
-                  <>
-                    <div className="border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-bold text-brand-blue text-lg">Al-Diwan Specialty Restaurant</h4>
-                        <span className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold">
-                          LIVE
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center gap-4 text-gray-500 text-sm mb-2">
-                        <div className="flex items-center gap-1">
-                          <Clock size={14} />
-                          <span>19:30</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin size={14} />
-                          <span>Al-Diwan Restaurant</span>
-                        </div>
-                      </div>
-                      
-                      <p className="text-brand-dark text-sm">Soup of the day: Potato leek & Pumpkin sage soup</p>
-                    </div>
-
-                    <div className="border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-bold text-brand-blue text-lg">Evening Jazz Performance</h4>
-                        <span className="bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold">
-                          UPCOMING
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center gap-4 text-gray-500 text-sm mb-2">
-                        <div className="flex items-center gap-1">
-                          <Clock size={14} />
-                          <span>21:00</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin size={14} />
-                          <span>Lobby Bar</span>
-                        </div>
-                      </div>
-                      
-                      <p className="text-brand-dark text-sm">Live jazz music featuring local artists</p>
-                    </div>
-                  </>
+                  <div className="flex items-center justify-center py-8">
+                    <p className="text-gray-500 text-lg">No events scheduled today</p>
+                  </div>
                 )}
               </div>
             </div>
